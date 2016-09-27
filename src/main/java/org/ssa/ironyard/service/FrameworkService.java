@@ -8,8 +8,7 @@ import org.ssa.ironyard.model.Framework;
 @Service
 public class FrameworkService
 {
-
-    private final FrameworkDAO frameworkDAO;
+    final FrameworkDAO frameworkDAO;
 
     @Autowired
     public FrameworkService(FrameworkDAO frameworkDAO)
@@ -17,7 +16,7 @@ public class FrameworkService
         this.frameworkDAO = frameworkDAO;
     }
 
-    public Framework createFramework(Framework benchmark)
+    public Framework insertFramework(Framework benchmark)
     {
         return frameworkDAO.insert(benchmark);
     }

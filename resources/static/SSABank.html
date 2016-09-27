@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>SSA Bank</title>
+
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+</head>
+<body>
+	<header>
+		<h1>SSA-Bank</h1>
+		<section id="menu">
+			<ul class="mainNav">
+				<li id="homelist">Customer List</li>
+				<li id="accountList">Account List</li>
+				<li id="addCust">Add Customers</li>
+
+
+			</ul>
+		</section>
+		<section id="search">
+			<section id = "searchCust">
+				<label>Search Customer</label><input id="searchCInput" type="text"></input>
+				<button id="submitCSearch">Search</button>
+				<button id="resetC">Reset</button>
+			</section>
+			<section id = "searchAcc">
+				<label>Search Account</label><input id="searchAInput" type="text"></input>
+				<button id="submitASearch">Search</button>
+				<button id="resetA">Reset</button>
+			</section>
+			
+			
+		</section>
+	</header>
+
+	<section id="content">
+
+		<section id="subnav">
+			<ul>
+					<li id = "sub1"></li>
+					<li id = "sna1">&gt</li>
+					<li id = "sub2"></li>
+					<li id= "sna2">&gt</li>
+					<li id = "sub3" class="accounts"></li>
+					<li id="sna3">&gt</li>
+					<li id="sub4" class="accounts"></li>
+					<li id="sna4">&gt</li>
+					<li id="sub5"></li>
+			</ul>
+		</section>
+
+		<section id="customer-list" class="customer">
+			<ul id="ul-c">
+
+			</ul>
+
+
+		</section>
+
+		<section id="customer" class="customer">
+			<div class="custClass"></div>
+			<button id="show-accounts">Show Accounts</button>
+			<button id="updateCust">Update Customer</button>
+		</section>
+
+		<section id="accounts" class="accounts">
+			<ul id="ul-a">
+
+			</ul>
+			<br>
+			<button id="addAccount">Add Account</button>
+			<button id="accountT">Transfer</button>
+
+		</section>
+
+		<section id="account" class="accounts">
+			<div class="accClass"></div>
+		
+
+			<div id=wdt>
+				<input id="textW" type="text">
+				<button id="accountW">Withdraw</button>
+
+				<input id="textD" type="text">
+				<button id="accountD">Deposit</button>
+
+
+				<button id="accountTransferFromAccount">Transfer</button>
+
+			</div>
+
+			<button id="updateAccount">Update Account</button>
+
+		</section>
+
+		<section id="addCustForm" class="customer">
+
+			<form>
+				<label>First Name</label><input id="fNameAdd" type="text"> 
+				<label>Last Name</label><input id="lNameAdd" type="text">
+
+			</form>
+			<br>
+			<button id="submitAddC">Add Customer</button>
+
+		</section>
+
+		<section id="updateCustForm" class="customer">
+
+			<form>
+				<label>First Name</label><input id="fNameUpdate" type="text">
+				<label>Last Name</label><input id="lNameUpdate" type="text">
+
+			</form>
+			<br>
+			<button id="submitUpdateC">Update Customer</button>
+		</section>
+
+		<section id="addAccountForm" class="accounts">
+
+			<form>
+				Type of Account<input id="TypeAdd" type="text"> Balance<input
+					id="BalanceAdd" type="text">
+
+
+			</form>
+
+			<button id="submitAddA">Add Account</button>
+
+		</section>
+
+		<section id="updateAccountForm" class="accounts">
+
+
+			<form>
+				Customer ID<input id="CustomerUpdate" type="text"> Type of
+				Account<input id="TypeUpdate" type="text">
+
+
+			</form>
+
+			<button id="submitUpdateA">Update Account</button>
+
+		</section>
+
+		<section id="transfer" class="accounts">
+			<form>
+				Account ID #1<input id="accountOne" type="text"> Transfer
+				Amount<input id="tAmount" type="text"> Account ID #2<input
+					id="accountTwo" type="text">
+			</form>
+
+			<button id="submitTransfer">Transfer</button>
+
+		</section>
+
+		<section id="transferFromAccount" class="accounts">
+			<p id="accountOneF">
+			<form>
+				<input id="tAmountF" type="text">
+				<p id="accountTwoF">to Account ID #2</p>
+				<input id="accountTwoFA" type="text">
+			</form>
+
+			<button id="submitTransferFromAccount">Transfer</button>
+
+		</section>
+
+		<section id="errorMessage">
+			<span id="error"></span>
+			<button id="closeError">X</button>
+		</section>
+		
+		<section id="errorMessageC">
+			<span id="errorC"></span>
+			<button id="closeErrorC">X</button>
+		</section>
+
+		<section id="successMessage">
+			<span id="success"></span>
+		</section>
+
+
+	</section>
+	<script src="/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript">			
+		    var cusID = null;
+			var accID = null;
+			var accBalance = null;
+			$(document).ready(function()//This is started on the load of the page
+			{
+				$.getJSON("ssa-bank/customers",customers);
+				
+			});
+			function customers(response)
+			{
+				for(let i = 0; i<response.length;i++)
+				{
+					$('#ul-c').append('<li id=\''+response[i].id+'\' class="clist">' + response[i].id + " " + response[i].firstName + " " + response[i].lastName  + '</li>')
+					
+					
+				}
+				
+				
+				$('#sub1').text("Home")
+				
+				$('#sna1').hide()
+				$('#sna2').hide()
+				$('#sna3').hide()
+				$('#sna4').hide()
+				
+				$('#customer-list').show()
+				$('#customer').hide()
+				$('#accounts').hide()
+				$('#account').hide()
+				$('#addCustForm').hide()
+				$('#updateCustForm').hide()
+				$('#addAccountForm').hide()
+				$('#updateAccountForm').hide()
+				$('#transfer').hide()
+				$('#transferFromAccount').hide()
+				$('#accountList').hide()
+				$('#errorMessage').hide()
+				$('#successMessage').hide()
+				$('#errorMessageC').hide()
+				$('#wdt').hide()
+				
+				$('#searchAcc').hide()
+				
+				
+				
+				
+			}
+			
+			$('#homelist').click(
+					reload
+			);
+			
+			$('#sub1').click(
+					reload
+			);
+			
+			function reload(evt)
+			{
+				location.reload()
+			}
+			
+			$('#accountList').click(function()
+			{
+				$.getJSON("ssa-bank/customers/"+ document.getElementsByClassName('custClass')[0].id + "/accounts" , accountsHomeList)
+			});
+			
+			function accountsHomeList()
+			{
+				$('#customer').hide()
+				$('#accounts').hide()
+				$('#account').hide()
+				$('#addCustForm').hide()
+				$('#updateCustForm').hide()
+				$('#addAccountForm').hide()
+				$('#updateAccountForm').hide()
+				$('#transfer').hide()
+				$('#transferFromAccount').hide()
+				$('#accountList').hide()
+				$('#errorMessage').hide()
+				$('#successMessage').hide()
+				
+				$('#accountList').show()
+				$('#accounts').show()	
+				
+				$('#ul-a').empty()
+				
+				$.getJSON("ssa-bank/customers/"+ document.getElementsByClassName('custClass')[0].id + "/accounts" , accounts)
+
+			}
+			
+			function customersClear()
+			{
+				$('#ul-c').empty()
+				$('#accountList').hide()
+			}
+			
+			
+			$('#ul-c').click(showCustomers);
+			
+			$('#sub2').click(showCustomersNav);
+				
+			function customerNavView()
+			{
+				$('#sna1').show()
+				$('#sub2').text("Customer")
+				$('#sna2').hide()
+				$('#sub3').hide()
+				$('#sna3').hide()
+				$('#sub4').hide()
+				$('#sna4').hide()
+				$('#sub5').hide()
+				$('#accountList').hide()
+				$('#accounts').hide()
+				$('#account').hide()
+				$('#transfer').hide()
+				$('#updateAccountForm').hide()
+				$('#addAccountForm').hide()
+				$('#addCustForm').hide()
+				$('#updateCustForm').hide()
+				$('#wdt').hide()
+				$('#transferFromAccount').hide()
+			
+			}
+			
+			function showCustomers(evt)
+			{
+				
+				customerNavView()
+				cusID = evt.target.id 
+				console.log(cusID)
+				$('.custClass').empty()
+				$.getJSON("ssa-bank/customers/" + $(evt.target).attr('id'), customer)
+			}
+			
+			function showCustomersNav()
+			{
+				
+				customerNavView()
+				console.log(cusID)
+				$('.custClass').empty()
+				$.getJSON("ssa-bank/customers/" + cusID, customer)
+			}
+			function customer(response)
+			{
+				if(response.error)
+				{
+					$('#errorMessageC').show()
+					$('#errorC').text("This customer does not exist")
+					
+				}
+				if(response.success)
+				{
+					$('.custClass').attr('id',response.success.id).text(response.success.id + " " + response.success.firstName + " " + response.success.lastName)
+
+					$('#customer-list').hide()
+					$('#searchCust').hide()
+					$('#reset').hide()
+					$('#customer').show()
+				}
+				
+			}
+			
+			$('#closeError').click(function()
+			{
+				
+				$('#errorMessage').hide()
+			});
+			
+			$('#closeErrorC').click(function()
+			{
+				
+				location.reload()
+			});
+			
+			$('#addCust').click(function(evt)
+			{
+				$('#addCustForm').show()
+				$('#customer').hide()
+				$('#accounts').hide()
+				$('#account').hide()
+				$('#ul-c').hide()
+				$('#ul-a').hide()
+				$('#updateCustForm').hide()
+				$('#addAccountForm').hide()
+				$('#updateAccountForm').hide()
+				$('#transfer').hide()
+				$('#transferFromAccount').hide()
+				$('#accountList').hide()
+				$('#errorMessage').hide()
+				$('#successMessage').hide()
+				$('#searchAcc').hide()
+				
+				
+				
+			});
+			
+			$('#submitAddC').click(function(evt)
+			{
+				if(validateLetter("fNameAdd") && validateLetter("lNameAdd"))
+				{
+					sendAdd();	
+				}
+				else
+				{
+					alert("Please enter a valid first and last name")
+				}
+					
+					
+			
+				
+				
+			});
+			
+		
+			function sendAdd() 
+			{
+
+		        $.ajax
+		        ({
+		            type: "POST",
+		            url: "ssa-bank/customers",
+		            dataType: "json",
+		            data: {"firstName": document.getElementById("fNameAdd").value, "lastName": document.getElementById("lNameAdd").value}
+		        	//success:toDetail;
+		        })
+		        
+		        .done(addToDetail)
+		        
+		 		
+				
+			}
+			
+			function addToDetail(response)
+	        {
+
+	        	if(response.success)
+		        {
+		        	$('#addCustForm').hide()
+		        	toDetail(response)
+		        	$('#successMessage').show()
+		        	$('#success').text("Adding the Customer was Successful")
+		        	$('#successMessage').fadeOut(1600, "linear")
+		        	
+		       	}
+		        if(response.error)
+		       	{
+		        	alert("Something went wrong the Customer was not added");
+		       	}
+
+	        }
+			
+			function toDetail(response)
+			{
+				$('.custClass').attr('id',response.success.id).text(response.success.id + " " + response.success.firstName + " " + response.success.lastName)
+
+				$('#customer-list').hide()
+				$('#customer').show()
+				$('#searchAcc').hide()
+			}
+			
+			$('#updateCust').click(function(evt)
+			{
+				$('#updateCustForm').show()
+				$('#addCustForm').hide()
+				$('#customer-list').hide()
+				$('#customer').hide()
+				$('#accounts').hide()
+				$('#wdt').hide()
+				$('#account').hide()	
+				$('#searchAcc').hide()
+				
+				console.log(cusID)
+				
+				
+			});
+			
+			$('#submitUpdateC').click(function(evt)
+			{
+				//if(validateLetter("fNameUpdate") && validateLetter("lNameUpdate"))
+				sendUpdate();
+						
+			});
+					
+				
+			function sendUpdate()
+			{
+				$.ajax
+			  	({
+			  		type: "PUT",
+			  		url: "ssa-bank/customers/" + cusID,
+				    dataType: "json",
+				    data: {"firstName": document.getElementById("fNameUpdate").value, "lastName": document.getElementById("lNameUpdate").value}
+				})
+				.done(updateToDetail);
+			}
+			
+			function updateToDetail(response)
+	        {
+
+	        	if(response.success)
+		        {
+		        	$('#updateCustForm').hide()
+		        	toDetail(response)
+		        	$('#successMessage').show()
+		        	$('#success').text("Updating the Customer was Successful")
+		        	$('#successMessage').fadeOut(1600, "linear")
+		        	
+		       	}
+		        if(response.error)
+		       	{
+		        	alert("Something went wrong the Customer was not updated");
+		       	}
+
+	        }
+			
+			
+			
+
+			$('#show-accounts').click(
+				showAccounts	
+			)
+			
+		$('#sub3').click(function(){
+			
+			console.log($('#sub3').attr('class'))	
+			console.log($('#sub3').hasClass("accounts"))
+			if($('#sub3').hasClass("accounts"))	
+			{showAccounts()}	
+			
+			if($('#sub3').hasClass("customer"))
+				{updateView()}
+		})
+		
+
+		function showAccountsView()
+		{
+			$('#sna2').show()
+			$('#sub3').show()
+			$('#sub3').text("Accounts")
+			$('#sna3').hide()
+			$('#sub4').hide()
+			$('#sna4').hide()
+			$('#sub5').hide()
+			$('#customer').hide()
+			$('#accountList').show()
+			$('#accounts').show()
+			$('#wdt').hide()
+			$('#account').hide()
+			$('#addCustForm').hide()
+			$('#updateCustForm').hide()
+			$('#addAccountForm').hide()
+			$('#updateAccountForm').hide()
+			$('#transfer').hide()
+			$('#transferFromAccount').hide()
+		
+			$('#errorMessage').hide()
+			$('#successMessage').hide()
+		}
+		
+			function showAccounts()
+			{
+				showAccountsView()
+				$('#ul-a').empty()
+				$('#sub3').attr('class','accounts')
+				console.log($('#sub3').attr('class'))
+
+			
+				console.log(document.getElementsByClassName('custClass')[0].id)
+				$.getJSON("ssa-bank/customers/"+ document.getElementsByClassName('custClass')[0].id + "/accounts" , accounts)
+			}
+			
+			function accounts(response)
+			{
+					
+					$('#accounts').show()
+					$('#searchAcc').show()
+
+					
+					if(response.error)
+					{
+						$('#errorMessage').show()
+						$('#error').text("")
+						$('#error').text("This customer has no accounts. Go ahead and add one")
+					
+					}
+					if(response.success)
+					{
+
+						for(let i = 0; i<response.success.length;i++)
+						{
+							$('#ul-a').append('<li id=\''+response.success[i].id+'\' class="alist">' + response.success[i].id + " " + response.success[i].customer.id + " " + response.success[i].type + " " + response.success[i].balance  + '</li>')
+	
+						}
+					}
+				
+				
+				
+			}
+			$('#ul-a').click(function(evt)
+			{
+				$('#wdt').show()
+				accID = evt.target.id
+				console.log(accID)
+				console.log(document.getElementsByClassName('custClass')[0].id)
+				$('.accClass').empty()
+				$.getJSON("ssa-bank/customers/" + document.getElementsByClassName('custClass')[0].id  + "/accounts/" + $(evt.target).attr('id') + "/detail", account)
+						
+
+			});
+			function account(response)
+			{
+				if(response.error)
+				{
+					$('#errorMessage').show()
+					$('#error').text("")
+					$('#error').text("This account does not exist")
+				}
+				if(response.success)
+				{
+					$('.accClass').attr('id',response.success.id).text(response.success.id + " " + response.success.customer.id + " " + response.success.type + " " + response.success.balance)
+					accBalance = response.success.balance
+					$('#accounts').hide()
+					$('#account').show()
+					$('#addAccountForm').hide()
+					$('#transfer').hide()
+					$('#transferFromAccount').hide()
+				}
+			}
+			
+			$('#addAccount').click(function(evt)
+			{
+				$('#errorMessage').hide()
+				$('#addAccountForm').show()
+				$('#accounts').hide()
+				$('#searchAcc').hide()
+			});
+			
+			
+			$('#submitAddA').click(function(evt)
+			{
+					
+				sendAddAccount();
+						
+			});
+					
+			function sendAddAccount() 
+			{
+		        $.ajax
+	      		({
+          			 type: "POST",
+           			 url: "ssa-bank/customers/accounts",
+		           	 dataType: "json",
+		       		 data: {"custID": document.getElementsByClassName('custClass')[0].id, "Type": document.getElementById("TypeAdd").value, "Balance": document.getElementById("BalanceAdd").value}
+		   		})
+		        		
+	     		.done(addToAccounts)
+			}
+			
+			function addToAccounts(response)
+			{
+				if(response.success)
+		        {
+		        	$('#addAccountForm').hide()
+		        	$('#ul-a').empty()
+		        	toAccounts(response)
+		        	
+		        	$('#successMessage').show()
+		        	$('#success').text("Creating the Account was Successful")
+		        	$('#successMessage').fadeOut(1600, "linear")
+		        	
+		       	}
+		        if(response.error)
+		       	{
+		        	alert("Something went wrong the Account was not created");
+		       	}
+			}
+			
+			function toAccounts(response)
+			{
+				$.getJSON("ssa-bank/customers/"+ document.getElementsByClassName('custClass')[0].id + "/accounts" , accounts)
+			}
+			
+			function toDetailAccount(response)
+			{
+				$('.accClass').attr('id',response.success.id).text(response.success.id + " " + response.success.customer.id + " " + response.success.type + " " + response.success.balance)
+			}
+			
+			function toDetailAccountNS(response)
+			{
+				$('.accClass').attr('id',response.id).text(response.id + " " + response.customer.id + " " + response.type + " " + response.balance)
+			}		
+			$('#updateAccount').click(function(evt)
+			{
+					$('#updateAccountForm').show()
+					$('#wdt').hide()
+					$('#updateAccount').hide()						
+			});
+
+			$('#submitUpdateA').click(function(evt)
+			{								
+				sendUpdateAccount();
+			});
+									
+			function sendUpdateAccount() 
+			{
+		        $.ajax
+	       		({
+     				type: "PUT",
+     				url: "ssa-bank/customers/" + cusID + "/accounts/" + accID,
+					dataType: "json",
+					data: {"Customer": document.getElementById("CustomerUpdate").value, "Type": document.getElementById("TypeUpdate").value, "Balance": accBalance }
+				})
+				
+				.done(updateToAccounts)
+			}
+			
+			function updateToAccounts(response)
+			{
+				if(response.success)
+		        {
+		        	$('#updateAccountForm').hide()
+		        	$('#ul-a').empty()
+		        	$('#account')
+		        	toAccounts(response)
+		        	
+		        	$('#account').hide()
+		        	$('#successMessage').show()
+		        	$('#success').text("Updating the Account was Successful")
+		        	$('#successMessage').fadeOut(1600, "linear")
+		        	
+		       	}
+		        if(response.error)
+		       	{
+		        	alert("Something went wrong the Account was not updated");
+		       	}
+			}
+
+			$('#accountW').click(function(evt)
+			{												
+				withdrawAccount();
+			});
+											
+			function withdrawAccount() 
+			{
+						
+				$.ajax
+			  	({
+		     		type: "PUT",
+		     		url: "ssa-bank/customers/" + cusID + "/accounts/" + accID + "/withdraw",
+					dataType: "json",
+					data: {"withdraw": document.getElementById("textW").value}
+				})
+						
+				.done(toDetailAccountNS)
+			}
+					
+			$('#accountD').click(function(evt)
+			{										
+				depositAccount();
+								
+			});
+													
+			function depositAccount() 
+			{
+										
+		        $.ajax
+	       		({
+					type: "PUT",
+					url: "ssa-bank/customers/" + cusID + "/accounts/" + accID + "/deposit",
+					dataType: "json",
+					data: {"deposit": document.getElementById("textD").value}
+				})
+				
+				.done(toDetailAccountNS)
+			}
+			
+			$('#accountT').click(function(evt)
+			{
+				$('#accounts').hide()
+				$('#transfer').show()
+				$('#errorMessage').hide()
+				$('#searchAcc').hide()
+			});
+			
+			$('#submitTransfer').click(function(evt)
+			{
+				$('#transfer').hide()
+				$('#ul-a').empty()			
+				
+				transferAccount();						
+			});
+											
+			function transferAccount() 
+			{
+											
+	  	    	$.ajax
+	        	({
+					type: "PUT",
+					url: "ssa-bank/customers/" + cusID + "/accounts/" + document.getElementById("accountOne").value + "/transfer",
+					dataType: "json",
+					data: {"accountOne": document.getElementById("accountOne").value, "transferAmount": document.getElementById("tAmount").value, "accountTwo": document.getElementById("accountTwo").value }
+			 	 })
+			 	 
+			 	 .done(toAccounts)
+												        		
+			}	
+			
+			$('#accountTransferFromAccount').click(function(evt)
+			{
+						$('#account').hide()
+						$('#errorMessage').hide()
+						$('#searchAcc').hide()
+						$('#transferFromAccount').show()
+						$('#accountOneF').empty()
+						
+						$('#accountOneF').append("How Much Would you like to transfer from account ID " + accID)	
+			});
+					
+			$('#submitTransferFromAccount').click(function(evt)
+			{
+				$('#transferFromAccount').hide()
+				$('#ul-a').empty()
+				transferAccountF()
+							
+												
+			});
+			
+												
+			function transferAccountF() 
+			{
+													
+				$.ajax
+			    ({
+					type: "PUT",
+					url: "ssa-bank/customers/" + cusID + "/accounts/" + accID + "/transferFromAccount",
+					dataType: "json",
+					data: {"transferAmountF": document.getElementById("tAmountF").value, "accountTwoFA": document.getElementById("accountTwoFA").value }
+				})
+				
+				.done(toAccounts)
+														        		
+
+			}
+			
+			$('#submitCSearch').click(function()
+			{
+				
+				var filterByC = document.getElementById("searchCInput").value;
+				
+				$('.clist').hide()
+				$('.clist:contains(' + filterByC + ')').show()
+
+			});
+			
+			$('#resetC').click(function()
+			{
+				$('.clist').show()
+			});
+			
+			$('#submitASearch').click(function()
+			{
+				console.log("hello")
+				var filterByA = document.getElementById("searchAInput").value;
+					
+				$('.alist').hide()
+				$('.alist:contains(' + filterByA + ')').show()
+
+			});
+			
+			$('#resetA').click(function()
+			{
+				$('.alist').show()
+			});
+			
+			function validateLetter(name) 
+			{
+			    if (document.getElementById(name) == "") 
+				{
+			        alert("Please Enter Something");
+			        document.getElementById(name).focus();
+			        return false;
+			    }
+			    if (!/^[a-zA-Z]*$/g.test(document.getElementById(name).value)) 
+				{
+			        alert("Only letters Can Be Entered");
+			        document.getElementById(name).focus();
+			        return false;
+			    }
+			}
+			
+			function validateNumber(name)
+			{
+				if (document.getElementById(name) == "") 
+				{
+			        alert("Please Enter Something");
+			        document.getElementById(name).focus();
+			        return false;
+			    }
+				if (!/^[0-9]+$/.test(document.getElementById(name).value)) 
+				{
+			        alert("Please Enter a Number For the Balance");
+			        document.getElementById(name).focus();
+			        return false;
+			    }
+				
+			}
+			
+			
+
+					
+			
+	
+		
+		</script>
+</body>
+</html>
