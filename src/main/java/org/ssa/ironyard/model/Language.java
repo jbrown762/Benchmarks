@@ -29,4 +29,11 @@ public class Language implements DomainObject
     {
         return language;
     }
+
+    @Override
+    public boolean deeplyEquals(Object obj)
+    {
+        
+        return false;
+    }
 }

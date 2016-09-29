@@ -5,12 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.ssa.ironyard.model.Benchmark;
 import org.ssa.ironyard.model.Framework;
 
 public class FrameworkDAOImpl extends AbstractDAO<Framework> implements FrameworkDAO

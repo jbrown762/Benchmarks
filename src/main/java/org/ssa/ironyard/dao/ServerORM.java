@@ -10,12 +10,12 @@ public interface ServerORM extends ORM<Server>
 {
     default String projection()
     {
-        return "name";
+        return "ServerName";
     }
     
     default String table()
     {
-        return "Servers";
+        return "servers";
     }
     
     default Server map(ResultSet results) throws SQLException
@@ -29,7 +29,7 @@ public interface ServerORM extends ORM<Server>
     
     default String prepareInsert()
     {
-        return "Insert into " + table() + " (server) Values(?)";
+        return "Insert into " + table() + " (ServerName) Values(?)";
     }
 
     

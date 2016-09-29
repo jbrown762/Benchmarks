@@ -17,7 +17,7 @@ public interface FrameworkORM extends ORM<Framework>
     
     default String table()
     {
-        return "WebFrameworks";
+        return "web_frameworks";
     }
     
     default Framework map(ResultSet results) throws SQLException

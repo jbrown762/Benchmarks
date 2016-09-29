@@ -148,7 +148,25 @@ public class Framework implements DomainObject
     {
         this.errors = errors;
     }
-    
-    
+
+    @Override
+    public Framework clone()
+    {
+        try
+        {
+            return (Framework) super.clone();
+        } catch (Exception e)
+        {
+
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deeplyEquals(Object obj)
+    {
+        
+        return false;
+    }
 
 }

@@ -18,7 +18,7 @@ public class DataSourceConfiguration
     @Bean
     public DataSource datasource()
     {
-        LOGGER.debug("YEAH Annotation based processing is working");
+        //LOGGER.debug("YEAH Annotation based processing is working");
         MysqlDataSource mysqlds = new MysqlDataSource();
         mysqlds.setURL(DATABASE_URL);
         return mysqlds;

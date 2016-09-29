@@ -32,6 +32,7 @@ public class ServerDAOImpl extends AbstractDAO<Server> implements ServerDAO
         try
         {
             connection = datasource.getConnection();
+            System.err.println(orm.prepareInsert());
             prepareStatement = connection.prepareStatement(orm.prepareInsert(), Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setString(1, server.getServer());
 

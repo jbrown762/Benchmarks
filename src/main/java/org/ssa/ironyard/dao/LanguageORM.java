@@ -15,7 +15,7 @@ public interface LanguageORM extends ORM<Language>
 
     default String table()
     {
-        return "Languages";
+        return "languages";
     }
 
     default Language map(ResultSet results) throws SQLException

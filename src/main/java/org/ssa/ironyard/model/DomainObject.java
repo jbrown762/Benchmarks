@@ -1,29 +1,25 @@
 package org.ssa.ironyard.model;
 
-
-public interface DomainObject
+public interface DomainObject extends Cloneable
 {
-    
+
     public default Integer getId()
     {
         return null;
-        
     }
 
-    
-    public default boolean deeplyEquals(Object obj)
-    {
-        return false;
-   
-        
-    }
-    
-    
-    
+    boolean deeplyEquals(Object obj);
+
+
     public default boolean isLoaded()
     {
         return false;
-       
-     
     }
+
+    @Override
+    String toString();
+
+    @Override
+    int hashCode();
+    
 }

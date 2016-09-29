@@ -30,4 +30,11 @@ public class Server implements DomainObject
     {
         return server;
     }
+
+    @Override
+    public boolean deeplyEquals(Object obj)
+    {
+        
+        return false;
+    }
 }
